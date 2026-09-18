@@ -1,0 +1,10 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace UnitConverter.Pages;
+
+public class ConversionModel
+{
+    public string ConversionType { get; set; }
+    public string Input { get; set; }
+    public string Output { get; set; }
+}

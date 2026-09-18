@@ -9,26 +9,38 @@ namespace UnitConverter.Pages;
 public class ConversionsModel : PageModel
 {
     [BindProperty(SupportsGet = true)]
-    public string Input { get; set; } = string.Empty;
-
+    public ConversionModel Conversion  { get; set; } = new ConversionModel();
     [BindProperty(SupportsGet = true)]
-    public string ConversionType { get; set; } = string.Empty;
-
-    public string Output { get; set; } = string.Empty;
-
+    public string Input
+    {
+        get => Conversion.Input;
+        set => Conversion.Input = value;
+    }
+    [BindProperty(SupportsGet = true)]
+    public string Output
+    {
+        get => Conversion.Output;
+        set => Conversion.Output = value;
+    }
+    [BindProperty(SupportsGet = true)]
+    public string ConversionType
+    {
+        get => Conversion.ConversionType;
+        set => Conversion.ConversionType = value;
+    }
 
     public void OnGet()
     {
         double inputInt = 0;
         double result = 0;
-        if (Input == string.Empty)
+        if (Conversion.Input == null)
         {
-            Input = "3.1415";
-            ConversionType = "MilesToKilometers";
+            Conversion.Input = "3.1415";
+            Conversion.ConversionType = "MilesToKilometers";
         }
         try
         {
-            inputInt = Convert.ToDouble(Input, CultureInfo.InvariantCulture);
+            inputInt = Convert.ToDouble(Conversion.Input, CultureInfo.InvariantCulture);
         }
         catch (Exception e)
         {
@@ -37,13 +49,12 @@ public class ConversionsModel : PageModel
             return;
         }
 
-        switch (ConversionType)
+        switch (Conversion.ConversionType)
         {
             case "MilesToKilometers":
                 try
                 {
                     result = new Length().FromMiles(inputInt).ToKilometers();
-                    ConversionType = "Miles to Kilometers";
                 }
                 catch (Exception e)
                 {
@@ -54,7 +65,6 @@ public class ConversionsModel : PageModel
                 try
                 {
                     result = new Length().FromKilometers(inputInt).ToMiles();
-                    ConversionType = "Kilometers to Miles";
                 }
                 catch (Exception e)
                 {
@@ -65,7 +75,6 @@ public class ConversionsModel : PageModel
                 try
                 {
                     result = new Temperature().FromFahrenheit(inputInt).ToCelsius();
-                    ConversionType = "Fahrenheit to Celsius";
                 }
                 catch (Exception e)
                 {
@@ -76,7 +85,6 @@ public class ConversionsModel : PageModel
                 try
                 {
                     result = new Temperature().FromCelsius(inputInt).ToFahrenheit();
-                    ConversionType = "Celsius to Fahrenheit";
                 }
                 catch (Exception e)
                 {
@@ -87,7 +95,6 @@ public class ConversionsModel : PageModel
                 try
                 {
                     result = new Mass().FromPounds(inputInt).ToKilograms();
-                    ConversionType = "Pounds to Kilograms";
                 }
                 catch (Exception e)
                 {
@@ -98,7 +105,6 @@ public class ConversionsModel : PageModel
                 try
                 {
                     result = new Mass().FromKilograms(inputInt).ToPounds();
-                    ConversionType = "Kilograms to Pounds";
                 }
                 catch (Exception e)
                 {
@@ -109,7 +115,6 @@ public class ConversionsModel : PageModel
                 try
                 {
                     result = new Length().FromMeters(inputInt).ToFeet();
-                    ConversionType = "Meters to Feet";
                 }
                 catch (Exception e)
                 {
@@ -120,7 +125,6 @@ public class ConversionsModel : PageModel
                 try
                 {
                     result = new Length().FromFeet(inputInt).ToMeters();
-                    ConversionType = "Feet to Meters";
                 }
                 catch (Exception e)
                 {
@@ -132,8 +136,11 @@ public class ConversionsModel : PageModel
                 break;
 
         }
-        Output = Convert.ToString(result, CultureInfo.InvariantCulture);
-        ViewData["ConversionType"] = ConversionType;
+        Conversion.Output = Convert.ToString(result, CultureInfo.InvariantCulture);
+        if(ViewData["ErrorMessage"] == null)
+        {
+            ViewData["ConversionType"] = ConversionTypes.All[Conversion.ConversionType];
+        }
         ViewData["Title"] = "Conversions";
 
     }

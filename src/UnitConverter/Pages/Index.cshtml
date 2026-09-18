@@ -5,6 +5,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form method="get" action="/Conversions">
+        <label class="form-label">Conversion Type</label>
+        <select id="conversionType" name="Conversion.ConversionType" class="form-select">
+            @foreach (var conversion in ConversionTypes.All)
+            {
+                <option value="@conversion.Key">@conversion.Value</option>
+            }
+        </select>
+        <label class="form-label">Input</label>
+        <input id="input" name="Conversion.Input" type="text" class="form-control"/>
+        <button class="btn btn-primary">Submit</button>
+    </form>
 </div>
+
