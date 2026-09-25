@@ -1,0 +1,67 @@
+@page "{handler?}"
+@using Microsoft.VisualBasic
+@model UnitConverter.Pages.QuickConversionsModel
+
+@{
+    ViewData["Title"] = "Quick Conversions";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Quick Conversions</title>
+</head>
+<body>
+<div>
+    <a asp-page="/">Home</a>
+    <form method="get" asp-page-handler="@ConversionTypes.MilesToKilometers">
+        <label asp-for="Miles" class="form-label">@ConversionTypes.All[ConversionTypes.MilesToKilometers]</label>
+        <input asp-for="Miles" name="input" class="form-control" />
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+
+    <form method="get" asp-page-handler="@ConversionTypes.KilometersToMiles">
+        <label asp-for="Kilometers" class="form-label">@ConversionTypes.All[ConversionTypes.KilometersToMiles]</label>
+        <input asp-for="Kilometers" name="input" type="number" class="form-control" />
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+
+    <form method="get" asp-page-handler="@ConversionTypes.FahrenheitToCelsius">
+        <label asp-for="Fahrenheit" class="form-label">@ConversionTypes.All[ConversionTypes.FahrenheitToCelsius]</label>
+        <textarea asp-for="Fahrenheit" name="input" class="form-control"></textarea>
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+
+    <form method="get" asp-page-handler="@ConversionTypes.CelsiusToFahrenheit">
+        <label asp-for="Celsius" class="form-label">@ConversionTypes.All[ConversionTypes.CelsiusToFahrenheit]</label>
+        <input asp-for="Celsius" name="input" type="range" min="-40" max="100" />
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+
+    <form method="get" asp-page-handler="@ConversionTypes.PoundsToKilograms">
+        <label asp-for="Pounds" class="form-label">@ConversionTypes.All[ConversionTypes.PoundsToKilograms]</label>
+        <select asp-for="Pounds" name="input" asp-items="Model.PoundOptions" class="form-select"></select>
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+
+    <form method="get" asp-page-handler="@ConversionTypes.KilogramsToPounds">
+        <label asp-for="Kilograms" class="form-label">@ConversionTypes.All[ConversionTypes.KilogramsToPounds]</label>
+        <input asp-for="Kilograms" name="input" type="number" class="form-control" />
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+
+    <form method="get" asp-page-handler="@ConversionTypes.MetersToFeet">
+        <label asp-for="Meters" class="form-label">@ConversionTypes.All[ConversionTypes.MetersToFeet]</label>
+        <input asp-for="Meters" name="input" type="number" class="form-control" />
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+
+    <form method="get" asp-page-handler="@ConversionTypes.FeetToMeters">
+        <label asp-for="Feet" class="form-label">@ConversionTypes.All[ConversionTypes.FeetToMeters]</label>
+        <input asp-for="Feet" name="input" type="number" class="form-control" />
+        <button type="submit" class="btn btn-primary">Convert</button>
+    </form>
+</div>
+</body>
+</html>
