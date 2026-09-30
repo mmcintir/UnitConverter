@@ -1,6 +1,4 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace UnitConverter.Pages;
+namespace UnitConverter.Models;
 
 public class ConversionModel
 {

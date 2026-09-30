@@ -1,66 +1,34 @@
-using System.Globalization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using UnitConverter.Models;
 using UnitOf;
 
-namespace UnitConverter.Pages;
+namespace UnitConverter.Services;
 
-public class ConversionsModel : PageModel
+public class UnitOfConversionService : IConversionService
 {
-    [BindProperty(SupportsGet = true)]
-    public ConversionModel Conversion  { get; set; } = new ConversionModel();
-    [BindProperty(SupportsGet = true)]
-    public string Input
+    public decimal Convert(decimal value, string conversionType)
     {
-        get => Conversion.Input;
-        set => Conversion.Input = value;
-    }
-    [BindProperty(SupportsGet = true)]
-    public string Output
-    {
-        get => Conversion.Output;
-        set => Conversion.Output = value;
-    }
-    [BindProperty(SupportsGet = true)]
-    public string ConversionType
-    {
-        get => Conversion.ConversionType;
-        set => Conversion.ConversionType = value;
-    }
-
-    public void OnGet()
-    {
-        double inputInt = 0;
-        double result = 0;
-        if (Conversion.Input == null)
-        {
-            Conversion.Input = "3.1415";
-            Conversion.ConversionType = "MilesToKilometers";
-        }
+        double inputInt;
+        double result = 0.0;
         try
         {
-            inputInt = Convert.ToDouble(Conversion.Input, CultureInfo.InvariantCulture);
+            inputInt = System.Convert.ToDouble(value);
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            ViewData["ErrorMessage"] = "Input must be a valid number";
-            return;
-        }
 
-        switch (Conversion.ConversionType)
+            throw new Exception("Error Converting Input", e);
+        }
+        switch (conversionType)
         {
             case "MilesToKilometers":
                 try
                 {
-                    result = new Length().FromMiles(inputInt).ToKilometers();
+                     result = new Length().FromMiles(inputInt).ToKilometers();
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             case "KilometersToMiles":
                 try
@@ -69,8 +37,9 @@ public class ConversionsModel : PageModel
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             case "FahrenheitToCelsius":
                 try
@@ -79,8 +48,9 @@ public class ConversionsModel : PageModel
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             case "CelsiusToFahrenheit":
                 try
@@ -89,8 +59,9 @@ public class ConversionsModel : PageModel
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             case "PoundsToKilograms":
                 try
@@ -99,8 +70,9 @@ public class ConversionsModel : PageModel
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             case "KilogramsToPounds":
                 try
@@ -109,8 +81,9 @@ public class ConversionsModel : PageModel
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             case "MetersToFeet":
                 try
@@ -119,8 +92,9 @@ public class ConversionsModel : PageModel
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             case "FeetToMeters":
                 try
@@ -129,20 +103,14 @@ public class ConversionsModel : PageModel
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    throw new Exception("Invalid input", e);
                 }
+
                 break;
             default:
-                ViewData["ErrorMessage"] = "Invalid conversion type";
-                break;
-
+                throw new Exception("Invalid conversion type");
         }
-        Conversion.Output = Convert.ToString(result, CultureInfo.InvariantCulture);
-        if(ViewData["ErrorMessage"] == null)
-        {
-            ViewData["ConversionType"] = ConversionTypes.All[Conversion.ConversionType];
-        }
-        ViewData["Title"] = "Conversions";
 
+        return System.Convert.ToDecimal(result);
     }
 }

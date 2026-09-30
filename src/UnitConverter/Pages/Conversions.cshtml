@@ -12,7 +12,7 @@
 <body>
 @if (ViewData.ContainsKey("ErrorMessage"))
 {
-    <div>
+    <div role="alert">
         <p class="text-danger">@ViewData["ErrorMessage"]</p>
     </div>
 }
