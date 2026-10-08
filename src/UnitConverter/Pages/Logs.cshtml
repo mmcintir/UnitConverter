@@ -1,19 +1,48 @@
-@page
+@page "{handler?}"
 @model UnitConverter.Pages.Logs
-
-@{
-    Layout = null;
-}
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title></title>
+    <title>Logs</title>
 </head>
 <body>
 <div>
-    
+    <form method="get">
+        <label asp-for="Level" class="form-label">Level</label>
+        <select asp-for="Level" class="form-select">
+            <option value="">All</option>
+            <option value="Information">Information</option>
+            <option value="Warning">Warning</option>
+            <option value="Error">Error</option>
+        </select>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Timestamp</th>
+                <th scope="col">Level</th>
+                <th scope="col">Message</th>
+                <th scope="col">Conversion</th>
+                <th scope="col">Input</th>
+                <th scope="col">Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var entry in Model.Entries)
+            {
+                <tr>
+                    <td>@entry.Timestamp</td>
+                    <td>@entry.Level</td>
+                    <td>@entry.Message</td>
+                    <td>@entry.ConversionType</td>
+                    <td>@entry.Input</td>
+                    <td>@entry.Result</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </form>
 </div>
 </body>
 </html>

@@ -1,3 +1,6 @@
+using System.Runtime.InteropServices.JavaScript;
+using System.Text;
+using UnitConverter.Models;
 using UnitOf;
 
 namespace UnitConverter.Services;
@@ -19,91 +22,91 @@ public class UnitOfConversionService : IConversionService
         }
         switch (conversionType)
         {
-            case "MilesToKilometers":
+            case ConversionTypes.MilesToKilometers:
                 try
                 {
-                     result = new Length().FromMiles(inputInt).ToKilometers();
+                    result = new Length().FromMiles(inputInt).ToKilometers();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.MilesToKilometers}", e);
                 }
-
                 break;
-            case "KilometersToMiles":
+            case ConversionTypes.KilometersToMiles:
                 try
                 {
                     result = new Length().FromKilometers(inputInt).ToMiles();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.KilometersToMiles}", e);
                 }
 
                 break;
-            case "FahrenheitToCelsius":
+            case ConversionTypes.FahrenheitToCelsius:
                 try
                 {
                     result = new Temperature().FromFahrenheit(inputInt).ToCelsius();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.FahrenheitToCelsius}", e);
                 }
 
                 break;
-            case "CelsiusToFahrenheit":
+            case ConversionTypes.CelsiusToFahrenheit:
                 try
                 {
                     result = new Temperature().FromCelsius(inputInt).ToFahrenheit();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.CelsiusToFahrenheit}", e);
                 }
 
                 break;
-            case "PoundsToKilograms":
+            case ConversionTypes.PoundsToKilograms:
                 try
                 {
                     result = new Mass().FromPounds(inputInt).ToKilograms();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.PoundsToKilograms}", e);
+
                 }
 
                 break;
-            case "KilogramsToPounds":
+            case ConversionTypes.KilogramsToPounds:
                 try
                 {
                     result = new Mass().FromKilograms(inputInt).ToPounds();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.KilogramsToPounds}", e);
                 }
 
                 break;
-            case "MetersToFeet":
+            case ConversionTypes.MetersToFeet:
                 try
                 {
                     result = new Length().FromMeters(inputInt).ToFeet();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.MetersToFeet}", e);
                 }
 
                 break;
-            case "FeetToMeters":
+            case ConversionTypes.FeetToMeters:
                 try
                 {
                     result = new Length().FromFeet(inputInt).ToMeters();
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Invalid input", e);
+                    throw new Exception($"Error converting {ConversionTypes.FeetToMeters}", e);
                 }
 
                 break;

@@ -38,10 +38,12 @@ public class QuickConversionsModel : PageModel
     public bool HasOutput { get; set; }
 
     private readonly IConversionService _conversionService;
+    private readonly ILogger<QuickConversionsModel> _logger;
 
-    public QuickConversionsModel(IConversionService conversionService)
+    public QuickConversionsModel(IConversionService conversionService,  ILogger<QuickConversionsModel> logger)
     {
         _conversionService = conversionService;
+        _logger = logger;
     }
     public IEnumerable<SelectListItem> PoundOptions =>
     [
@@ -94,13 +96,20 @@ public class QuickConversionsModel : PageModel
     {
         try
         {
-            Output = _conversionService.Convert(Convert.ToDecimal(input),conversionType);
+            Output = _conversionService.Convert(Convert.ToDecimal(input), conversionType);
             HasOutput = true;
+            _logger.LogInformation(
+                "Converted {input} using {conversionType} with output {output}",
+                input, conversionType, Output);
         }
         catch (Exception e)
         {
-            ViewData["ErrorMessage"] = e.Message;
+            ViewData["ErrorMessage"] = "Unable to convert";
+            _logger.LogWarning(
+                "Unable to convert {input} using {conversionType}",
+                input, conversionType);
         }
+
         return Page();
 
     }
