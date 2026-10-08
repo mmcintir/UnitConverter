@@ -30,7 +30,10 @@ public class JsonLogReader : ILogReader
                 }
                 catch (JsonException e)
                 {
-                    throw new Exception($"Could not read log file: {logFile}", e);
+                     entry = new LogEntry();
+                     entry.Message = e.Message;
+                     entry.Exception = e.StackTrace;
+                     entry.Level = "Error";
                 }
                 if (entry.Level == null || entry.Level.IsWhiteSpace())
                 {

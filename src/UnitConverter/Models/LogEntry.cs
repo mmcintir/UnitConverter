@@ -16,7 +16,10 @@ public class LogEntry
     [JsonPropertyName("@x")]
     public string? Exception { get; set; }
 
+    [JsonPropertyName("input")]
     public dynamic? Input { get; set; }
+    [JsonPropertyName("conversionType")]
     public string? ConversionType { get; set; }
+    [JsonPropertyName("output")]
     public decimal? Result { get; set; }
 }
